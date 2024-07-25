@@ -1,5 +1,6 @@
 // Ignore this clippy issue for generated `prost` code.
 #![allow(clippy::derive_partial_eq_without_eq)]
+#![doc = include_str!("../README.md")]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![forbid(unsafe_code)]
 #![warn(trivial_casts, trivial_numeric_casts, unused_import_braces)]
@@ -11,7 +12,7 @@ pub use tendermint_proto as tendermint;
 use cosmos_sdk_proto::traits::TypeUrl;
 
 /// The version (commit hash) of the Cosmos SDK used when generating this library.
-pub const CHAIN_MAIN_VERSION: &str = include_str!("CHAIN_MAIN_COMMIT");
+pub const CHAIN_MAIN_VERSION: &str = include_str!("prost/CHAIN_MAIN_COMMIT");
 
 /// chainmain protobuf definitions.
 pub mod chainmain {
@@ -19,7 +20,7 @@ pub mod chainmain {
     #[allow(clippy::module_inception)]
     pub mod chainmain {
         pub mod v1 {
-            include!("chainmain.chainmain.v1.rs");
+            include!("prost/chainmain.chainmain.v1.rs");
         }
     }
 
@@ -27,14 +28,14 @@ pub mod chainmain {
     pub mod nft {
         pub mod v1 {
             use serde::{Deserialize, Serialize};
-            include!("chainmain.nft.v1.rs");
+            include!("prost/chainmain.nft.v1.rs");
         }
     }
 
     /// supply
     pub mod supply {
         pub mod v1 {
-            include!("chainmain.supply.v1.rs");
+            include!("prost/chainmain.supply.v1.rs");
         }
     }
 }
@@ -59,14 +60,14 @@ impl TypeUrl for chainmain::nft::v1::MsgBurnNft {
 }
 
 /// The version (commit hash) of the LunaClassic Core used when generating this library.
-pub const LUNA_CLASSIC_VERSION: &str = include_str!("LUNA_CLASSIC_COMMIT");
+pub const LUNA_CLASSIC_VERSION: &str = include_str!("prost/LUNA_CLASSIC_COMMIT");
 
 /// luna_classic protobuf definitions.
 pub mod luna_classic {
     /// wasm
     pub mod wasm {
         pub mod v1beta1 {
-            include!("terra.wasm.v1beta1.rs");
+            include!("prost/terra.wasm.v1beta1.rs");
         }
     }
 }

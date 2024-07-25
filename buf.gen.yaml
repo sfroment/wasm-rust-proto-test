@@ -4,29 +4,40 @@ managed:
 
 plugins:
   - plugin: buf.build/community/neoeinstein-prost:v0.3.1
-    out: gen
-    #opt:
-    #  - compile_well_known_types
-    #  - extern_path=.google.protobuf=::pbjson_types
-    #  - file_descriptor_set
-    #  - enable_type_names
-  #- plugin: buf.build/community/neoeinstein-prost-serde:v0.2.3
-  #  out: gen
-  - plugin: buf.build/community/neoeinstein-tonic:v0.2.2
-    out: gen
+    out: proto-gen/src
+    opt:
+      - bytes=.
+      - compile_well_known_types
+      - extern_path=.google.protobuf=::pbjson_types
+      - file_descriptor_set
+      #- enable_type_names
+  - plugin: buf.build/community/neoeinstein-prost-serde:v0.3.0
+    out: proto-gen/src
+  - plugin: buf.build/community/neoeinstein-tonic:v0.4.0
+    out: proto-gen/src
     opt:
       - compile_well_known_types
       - no_transport=true
-      - no_server=true
+      #- no_server=true
       - extern_path=.google.protobuf=::pbjson_types
       #- no_client=true
   - plugin: prost-crate
-    out: .
+    out: ./proto-gen
     strategy: all
     opt:
-      - include_file=gen/mod.rs
-      - gen_crate
-      #- gen_crate=Cargo.toml
+      - include_file=src/lib.rs
+      - gen_crate=./proto-gen/Cargo.toml
+  - plugin: buf.build/protocolbuffers/js
+    out: client/greeter-bis/src/gen
+    #include_imports: true
+    opt:
+      - import_style=commonjs,binary
+  - plugin: buf.build/grpc/web
+    out: client/greeter-bis/src/gen
+    #include_imports: true
+    opt:
+      - import_style=commonjs+dts
+      - mode=grpcwebtext
 #  #- remote: buf.build/grpc-ecosystem/openapiv2:v2.16.2
 #  #  out: gen/openapiv2
 #  #- remote: buf.build/protocolbuffers/go
